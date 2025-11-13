@@ -53,7 +53,8 @@ class FRONT3D(torch.utils.data.Dataset):
     ROOM_TYPES = {
         'bedroom': 0,
         'dining': 1, 
-        'living': 2
+        'living': 2,
+        'bath': 3
     }
 
     def __init__(self, root_dir: str, transform: Optional[Callable] = None, room_condition: bool = False):
@@ -179,5 +180,7 @@ class FRONT3D(torch.utils.data.Dataset):
             return self.ROOM_TYPES['living']
         elif 'dining' in room_name and 'living' not in room_name:
             return self.ROOM_TYPES['dining']
+        elif 'bath' in room_name:
+            return self.ROOM_TYPES['bath']
         else:
             raise ValueError(f"Unknown or unsupported room type for path: {room_path}")
