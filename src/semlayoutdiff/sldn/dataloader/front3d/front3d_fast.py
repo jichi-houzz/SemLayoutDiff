@@ -89,7 +89,8 @@ class Front3DFast(data.Dataset):
                     sample_weights.append(0.9)
                 elif room_type_id == 2:
                     sample_weights.append(0.35)
-                
+                elif room_type_id == 3: # bath
+                    sample_weights.append(1.0)
             self.weights = sample_weights
 
         # Get class IDs for floor, door, window from JSON mapping (based on room type)
