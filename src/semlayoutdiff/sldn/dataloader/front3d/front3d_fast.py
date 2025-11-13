@@ -14,7 +14,7 @@ class Front3DFast(data.Dataset):
     
     This dataset class provides efficient loading of 3D indoor layout data with support for:
     - Floor plan conditioning
-    - Architecture conditioning (floor, doors, windows)
+    - Architecture conditioning (floor, doors, windows, walls)
     - Room type conditioning
     - Mixed condition training
     - Text conditioning
@@ -101,7 +101,7 @@ class Front3DFast(data.Dataset):
             config_file = os.path.join("preprocess/metadata", f"{room_type}_idx_to_generic_label.json")
             with open(config_file, 'r') as f:
                 self.cls_label_map = json.load(f)
-                for item in ["floor", "door", "window"]:
+                for item in ["floor", "door", "window", "wall"]:
                     setattr(self, f"{item}_id", int(next(key for key, value in self.cls_label_map.items() if value == item)))
 
     def _check_exists(self, H, W, split):
@@ -135,6 +135,7 @@ class Front3DFast(data.Dataset):
         shifted_img = img.clone()
         window_id = self.window_id
         door_id = self.door_id
+        wall_id = self.wall_id
 
         # Remove doors and shift higher IDs down
         shifted_img[img == door_id] = 0
@@ -145,6 +146,12 @@ class Front3DFast(data.Dataset):
         window_id -= 1
         shifted_img[shifted_img == window_id] = 0
         mask = shifted_img > window_id
+        shifted_img[mask] -= 1
+
+        # Update wall_id after door removal and repeat process
+        wall_id -= 1
+        shifted_img[shifted_img == wall_id] = 0
+        mask = shifted_img > wall_id
         shifted_img[mask] -= 1
 
         return shifted_img
@@ -166,6 +173,8 @@ class Front3DFast(data.Dataset):
                 floor_plan[img == self.door_id] = 2
             if hasattr(self, 'window_id'):
                 floor_plan[img == self.window_id] = 3
+            if hasattr(self, 'wall_id'):
+                floor_plan[img == self.wall_id] = 4
         else:
             raise ValueError(f"Unknown condition type: {condition_type}")
             

@@ -40,7 +40,8 @@ class ImageProcessor:
             0: [255, 255, 255],  # Background -> White
             1: [211, 211, 211],  # Floor -> Gray
             2: [0, 0, 153],      # Door -> Dark Blue
-            3: [153, 153, 255]   # Window -> Light Blue
+            3: [153, 153, 255],  # Window -> Light Blue
+            4: [153, 0, 0],      # Wall -> Red
         }
 
     def instance_map_to_color(self, batch_instance_maps: torch.Tensor) -> np.ndarray:
@@ -181,6 +182,7 @@ class FloorPlanLoader:
         floor_plan_classes[floor_plan == 85] = 1     # Floor
         floor_plan_classes[floor_plan == 170] = 2    # Door
         floor_plan_classes[floor_plan == 255] = 3    # Window
+        floor_plan_classes[floor_plan == 120] = 4    # Wall
 
         # Handle intermediate values
         floor_plan_classes[(floor_plan > 0) & (floor_plan < 85)] = 1
@@ -363,25 +365,29 @@ class LayoutSampler:
 
     def _create_colormap_without_room(self, color_palette: Dict, idx_to_label: Dict) -> Dict[int, Tuple[int, int, int]]:
         """Create colormap excluding room elements."""
-        door_id = window_id = None
+        door_id = window_id = wall_id = None
 
-        # Find door and window IDs
+        # Find door and window and wall IDs
         for idx, label in idx_to_label.items():
             if label.lower() == 'door':
                 door_id = int(idx)
             elif label.lower() == 'window':
                 window_id = int(idx)
+            elif label.lower() == 'wall':
+                wall_id = int(idx)
 
         colors = {}
         for idx, label in idx_to_label.items():
             idx = int(idx)
-            if label.lower() in ['door', 'window'] or label not in color_palette:
+            if label.lower() in ['door', 'window', 'wall'] or label not in color_palette:
                 continue
 
             adjusted_idx = idx
             if door_id and idx > door_id:
                 adjusted_idx -= 1
             if window_id and idx > window_id:
+                adjusted_idx -= 1
+            if wall_id and idx > wall_id:
                 adjusted_idx -= 1
 
             colors[adjusted_idx] = tuple(color_palette[label])
@@ -626,6 +632,7 @@ class LayoutSampler:
         colored_floor_plan[floor_plan == 1] = [211, 211, 211]  # Floor -> Gray
         colored_floor_plan[floor_plan == 2] = [0, 0, 153]      # Door -> Dark Red
         colored_floor_plan[floor_plan == 3] = [153, 153, 255]  # Window -> Light Red
+        colored_floor_plan[floor_plan == 4] = [153, 0, 0]      # Wall -> Red
 
         return colored_floor_plan
 

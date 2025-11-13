@@ -402,6 +402,7 @@ class Experiment(DiffusionExperiment):
                         colored_floor_plan[fp == 1] = [211, 211, 211]  # Floor: Gray
                         colored_floor_plan[fp == 2] = [153, 0, 0]      # Door: Dark Red
                         colored_floor_plan[fp == 3] = [255, 153, 153]  # Window: Light Red
+                        colored_floor_plan[fp == 4] = [0, 0, 153]      # Wall: Blue
                         floor_plan_img = colored_floor_plan
                     else:
                         # Simple binary floor plan (grayscale)
