@@ -1,6 +1,8 @@
 eval_every: 1
 check_every: 25
-epochs: 1000
+#epochs: 1000
+#epochs: 20
+epochs: 100
 diffusion_steps: 4000
 dataset: front3d
 batch_size: 48
