@@ -469,7 +469,8 @@ class LayoutSampler:
         floor_output_dir = os.path.join(self.cfg.out_dir, floor_name)
         os.makedirs(floor_output_dir, exist_ok=True)
 
-        try:
+        #try:
+        if True:
             # Load floor plan
             floor_plan = self.floor_plan_loader.load_custom_floor_plan(floor_plan_path)
             print(f"  Loaded floor plan with shape: {floor_plan.shape}")
@@ -499,8 +500,8 @@ class LayoutSampler:
 
             print(f"  Completed processing {floor_name}")
 
-        except Exception as e:
-            print(f"  Error processing floor plan {floor_plan_path}: {e}")
+        #except Exception as e:
+        #    print(f"  Error processing floor plan {floor_plan_path}: {e}")
 
     def _generate_and_save_samples(self, floor_plan: torch.Tensor, num_samples: int, 
                                  output_dir: str, text_embedding: Optional[torch.Tensor]) -> float:

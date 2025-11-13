@@ -168,7 +168,9 @@ class SegmentationUnet(nn.Module):
         self.embedding = nn.Embedding(num_classes, dim)
         self.floorplan_embedding = nn.Embedding(4, dim)
         self.floorplan_encoder = ResNet18(in_dim=1, out_dim=dim)
-        self.room_type_embedding = nn.Embedding(3, dim)
+        # jichi: Increase room type embedding to include bathroom
+        #self.room_type_embedding = nn.Embedding(3, dim)
+        self.room_type_embedding = nn.Embedding(3+1, dim)
         self.mixed_condition_embedding = nn.Embedding(3, dim)
         self.fc_text = nn.Linear(50, dim)
         

@@ -165,7 +165,6 @@ class MultinomialDiffusion(torch.nn.Module):
 
     def predict_start(self, log_x_t, t, floor_plan, room_type, text_condition, mixed_condition_id):
         x_t = log_onehot_to_index(log_x_t)
-
         out = self._denoise_fn(t, x_t, floor_plan, room_type, text_condition, mixed_condition_id)
 
         assert out.size(0) == x_t.size(0)
