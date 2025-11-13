@@ -657,6 +657,8 @@ def export_scenestate(cfg, new_label_to_generic_label, pix_ratio_threshold, obje
             room_type = "livingroom"
         elif "dining" in room_type_indicator:
             room_type = "diningroom"
+        elif "bath" in room_type_indicator:
+            room_type = "bathroom"
         else:
             room_type = None
             

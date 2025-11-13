@@ -224,7 +224,7 @@ class FloorPlanLoader:
 
     def _load_regular_floor_plans(self) -> List[torch.Tensor]:
         """Load regular floor plans from dataset."""
-        room_type_map = {0: "bed", 1: "living", 2: "dining"}
+        room_type_map = {0: "bed", 1: "living", 2: "dining", 3: "bath"}
 
         if self.args.room_type_condition:
             room_type = room_type_map[self.cfg.sample_room_type]

@@ -93,7 +93,7 @@ class Front3DFast(data.Dataset):
             self.weights = sample_weights
 
         # Get class IDs for floor, door, window from JSON mapping (based on room type)
-        room_types = ['bedroom', 'diningroom', 'livingroom', 'unified']
+        room_types = ['bedroom', 'diningroom', 'livingroom', 'bathroom', 'unified']
         room_type = next((rt for rt in room_types if rt in self.split), None)
         if self.specific_room_type is not None:
             room_type = self.specific_room_type
@@ -299,7 +299,7 @@ class Front3DFast(data.Dataset):
         Returns:
             filtered and mapped tensor data
         """
-        room_type_map = {'bedroom': 0, 'livingroom': 1, 'diningroom': 2}
+        room_type_map = {'bedroom': 0, 'livingroom': 1, 'diningroom': 2, 'bathroom': 3}
         if specific_room_type not in room_type_map:
             raise ValueError(f'specific_room_type should be one of {list(room_type_map.keys())}')
         
