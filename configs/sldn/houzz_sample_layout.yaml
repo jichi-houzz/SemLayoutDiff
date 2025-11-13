@@ -7,7 +7,7 @@
 model: tmp_log/log/flow/front3d/multinomial_diffusion/multistep/2025-11-13_14-13-08
 
 # Data mode selection - set to true to use custom floor plans, false for original data
-use_custom_data: false
+use_custom_data: true
 
 # === ORIGINAL DATA MODE SETTINGS ===
 # Used when use_custom_data: false
@@ -23,7 +23,7 @@ floor_plan_dir: "datasets/results/arch_plan"
 # === CUSTOM DATA MODE SETTINGS ===
 # Used when use_custom_data: true
 samples_per_floor: 1  # Number of samples to generate per custom floor plan
-custom_floor_dir: "datasets/results/custom_floor_plans/bedroom_arch"
+#custom_floor_dir: "datasets/results/custom_floor_plans/bedroom_arch"
 save_composite_maps: true
 
 # === COMMON SETTINGS ===
@@ -33,7 +33,7 @@ idx_to_label_dir: "preprocess/metadata"
 
 # Room type settings
 room_type_condition: true
-sample_room_type: 1  # 0=bedroom, 1=livingroom, 2=diningroom
+sample_room_type: 3  # 0=bedroom, 1=livingroom, 2=diningroom, 3=bathroom
 
 # Floor plan and architecture settings
 w_arch: true  # Set to true if using architectural elements (doors/windows)
@@ -54,6 +54,6 @@ condition_type: arch  # Options: "uncon", "floor", "arch"
 
 # Example 2: Custom floor plan sampling
 # use_custom_data: true
-# custom_floor_dir: "../path/to/custom/floor/plans"
+custom_floor_dir: "datasets/custom/unit10/living"
 # samples_per_floor: 3
 # condition_type: "floor"
