@@ -4,7 +4,7 @@
 
 # Model and checkpoint - update path to your trained model
 #model: checkpoints/sldn_checkpoints
-model: tmp_log/log/flow/front3d/multinomial_diffusion/multistep/2025-11-13_14-13-08
+model: tmp_log/log/flow/front3d/multinomial_diffusion/multistep/2025-11-13_15-18-00
 
 # Data mode selection - set to true to use custom floor plans, false for original data
 use_custom_data: true

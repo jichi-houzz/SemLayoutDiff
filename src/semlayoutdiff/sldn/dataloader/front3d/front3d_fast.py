@@ -38,7 +38,11 @@ class Front3DFast(data.Dataset):
     
     def __init__(self, root, split='unified_w_arch', resolution=(32, 64), transform=None, floor_plan=False, wo_floor=False,
                  room_type_condition=False, w_arch=False, wo_arch=False, specific_room_type=None, text_condition=False,
-                 mixed_condition=False, condition_types=['none', 'floor', 'arch'], condition_prob=[0.33, 0.33, 0.34]):
+                 mixed_condition=False, 
+                 # Only train arch layout
+                 #condition_types=['none', 'floor', 'arch'], condition_prob=[0.33, 0.33, 0.34],
+                 condition_types=['arch'], condition_prob=None,
+                 ):
         assert resolution in [(32, 64), (128, 256), (240, 320), (48, 64), (64, 64), (120, 120)]
 
         H, W = resolution
